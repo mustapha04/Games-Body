@@ -62,8 +62,9 @@ async function getSeoSettings(): Promise<{
   return { googleSearchConsoleKey: "", googleAnalyticsId: "", bingWebmasterKey: "" };
 }
 
+export const app = express();
+
 async function startServer() {
-  const app = express();
   const PORT = 3000;
 
   app.use(express.json());
@@ -1005,11 +1006,15 @@ Please generate an extreme high-quality, professional, gaming intelligence repor
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`[GAMESBODY BACKEND] Server running on port ${PORT}`);
-  });
+  if (!process.env.VERCEL) {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`[GAMESBODY BACKEND] Server running on port ${PORT}`);
+    });
+  }
 }
 
 startServer().catch((err) => {
   console.error("Failed to start server:", err);
 });
+
+export default app;
