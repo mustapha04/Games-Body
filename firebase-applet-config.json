@@ -1,0 +1,10 @@
+{
+  "projectId": "aikennet",
+  "appId": "1:352941007782:web:087c1403cc2fa954bb2567",
+  "apiKey": "AIzaSyAwok27NQ_WIR_jXlPCERh--JnDqZfneT4",
+  "authDomain": "aikennet.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "aikennet.firebasestorage.app",
+  "messagingSenderId": "352941007782",
+  "measurementId": "G-7YHHMCQQGC"
+}

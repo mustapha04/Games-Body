@@ -1,0 +1,162 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Public profile configuration and user role details.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique Firebase Auth user ID." },
+        "email": { "type": "string", "description": "The user's registered email address." },
+        "username": { "type": "string", "description": "Display username selected by the player." },
+        "avatarUrl": { "type": "string", "description": "URL to the user's profile avatar." },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "Role classification for access controls." },
+        "isBanned": { "type": "boolean", "description": "Flag indicating if the user is suspended from discussions." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The timestamp indicating when the user profile was initialized." }
+      },
+      "required": ["uid", "email", "username", "role", "isBanned", "createdAt"]
+    },
+    "Favorite": {
+      "title": "Favorite Game",
+      "description": "Association representing a user's favorited game.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Reference UID of the user who favorited the game." },
+        "gameId": { "type": "string", "description": "Unique identifier of the favorited game." },
+        "title": { "type": "string", "description": "Title of the favorited game for fast display." },
+        "image": { "type": "string", "description": "Banner image URL of the target game." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The timestamp of addition." }
+      },
+      "required": ["userId", "gameId", "title", "image", "createdAt"]
+    },
+    "Rating": {
+      "title": "Game Rating",
+      "description": "User rating assigned to a specific game.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Reference UID of the rating user." },
+        "gameId": { "type": "string", "description": "ID of the rated game." },
+        "rating": { "type": "integer", "description": "Numerical rating between 1 and 10." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The timestamp of creation." }
+      },
+      "required": ["userId", "gameId", "rating", "createdAt"]
+    },
+    "Comment": {
+      "title": "Game Discussion Comment",
+      "description": "Comments and replies on a specific game.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the user posting the comment." },
+        "username": { "type": "string", "description": "Cached username at the time of comment." },
+        "avatarUrl": { "type": "string", "description": "Cached avatar image URL." },
+        "gameId": { "type": "string", "description": "ID of the game discussed." },
+        "parentId": { "type": "string", "description": "Optional parent comment ID if this is a reply." },
+        "content": { "type": "string", "description": "Plain text comment body content." },
+        "likes": { "type": "integer", "description": "Total number of likes accumulated." },
+        "likedBy": { "type": "array", "description": "List of user UIDs who liked this comment." },
+        "isReported": { "type": "boolean", "description": "True if flagged as potential toxic content or spam." },
+        "reportsCount": { "type": "integer", "description": "Number of unique moderation reports received." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The timestamp of publication." }
+      },
+      "required": ["userId", "username", "gameId", "content", "likes", "likedBy", "isReported", "reportsCount", "createdAt"]
+    },
+    "CustomList": {
+      "title": "Custom Game Collection List",
+      "description": "User created collections of games.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the collection owner." },
+        "username": { "type": "string", "description": "Cached display username of the owner." },
+        "title": { "type": "string", "description": "Title of the custom collection list." },
+        "description": { "type": "string", "description": "Description of the list's play style or theme." },
+        "games": { "type": "array", "description": "Array of game objects containing game details." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The timestamp of creation." }
+      },
+      "required": ["userId", "username", "title", "description", "games", "createdAt"]
+    },
+    "AffiliateLink": {
+      "title": "Affiliate Link config",
+      "description": "Platform or store-specific affiliate path parameters.",
+      "type": "object",
+      "properties": {
+        "gameId": { "type": "string", "description": "Reference game ID." },
+        "platform": { "type": "string", "description": "Target storefront, e.g., Steam, Epic, GOG." },
+        "affiliateUrl": { "type": "string", "description": "Full affiliate URL pointing to the checkout page." },
+        "clicks": { "type": "integer", "description": "Analytical click count tracked by the platform." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "The creation timestamp." }
+      },
+      "required": ["gameId", "platform", "affiliateUrl", "clicks", "createdAt"]
+    },
+    "AffiliateClick": {
+      "title": "Affiliate Click Event Details",
+      "description": "Event logged whenever an affiliate transition occurs.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Optional user UID who clicked the link." },
+        "gameId": { "type": "string", "description": "Reference game ID." },
+        "platform": { "type": "string", "description": "Marketplace platform clicked." },
+        "clickedAt": { "type": "string", "format": "date-time", "description": "Timestamp indicating when click event occurred." }
+      },
+      "required": ["gameId", "platform", "clickedAt"]
+    },
+    "AdminDoc": {
+      "title": "Admin Reference Document",
+      "description": "Minimal document indicating presence of administrative permissions.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "UID of the administrative user." },
+        "email": { "type": "string", "description": "Admin email verification check." }
+      },
+      "required": ["uid"]
+    },
+    "SystemSettings": {
+      "title": "System Settings",
+      "description": "Global website configuration options including integrated SEO keys.",
+      "type": "object",
+      "properties": {
+        "googleSearchConsoleKey": { "type": "string", "description": "Verification tag string for Google Search Console." },
+        "googleAnalyticsId": { "type": "string", "description": "Active Measurement ID for Google Analytics streaming." },
+        "bingWebmasterKey": { "type": "string", "description": "Bing Webmaster domain verification code." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of the last config adjustment." }
+      },
+      "required": ["updatedAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Stores basic user profiles."
+    },
+    "favorites/{favoriteId}": {
+      "schema": "Favorite",
+      "description": "Collection of game favoriting records."
+    },
+    "ratings/{ratingId}": {
+      "schema": "Rating",
+      "description": "Contains user-defined score ratings for tracking preferences."
+    },
+    "comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Global user comments, reviews, and replies."
+    },
+    "lists/{listId}": {
+      "schema": "CustomList",
+      "description": "Custom curated gaming lists created by the user community."
+    },
+    "affiliate_links/{linkId}": {
+      "schema": "AffiliateLink",
+      "description": "Configurable purchase and landing links managed by site admins."
+    },
+    "affiliate_clicks/{clickId}": {
+      "schema": "AffiliateClick",
+      "description": "Logged analytic events for purchase routing clicks."
+    },
+    "admins/{userId}": {
+      "schema": "AdminDoc",
+      "description": "Server-side registry of administrative privileges."
+    },
+    "settings/{settingsId}": {
+      "schema": "SystemSettings",
+      "description": "Global settings parameters."
+    }
+  }
+}

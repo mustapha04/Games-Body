@@ -1,0 +1,8 @@
+{
+  "name": "gamesbody",
+  "description": "gamesbody is the ultimate hub for discovery, free games catalog, and live storefront discount tracking. Explore AI-powered game lore insights, deals, and customize your personal game lists.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
